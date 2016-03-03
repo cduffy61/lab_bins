@@ -1,10 +1,16 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * Runs a number of algorithms that try to fit files onto disks.
@@ -42,8 +48,17 @@ public class Bins {
          PriorityQueue<Disk> pq = new PriorityQueue<Disk>();
          worstFitDecreasing(pq, data);
          worstFit(pq, data);
+         Integer [] nums = {1, 2, 3, 4, 5, 6, 7, 8};
+         List<Integer> toTransform = Arrays.asList(nums);
+         fitDisksAndPrint(toTransform, (in) -> in.stream()
+        		 .filter((elem) -> elem%2 == 0).collect(Collectors.toList()));
          
-         
+    }
+    
+    public void fitDisksAndPrint(List<Integer> toTransform, Function<List<Integer>, List<Integer>> func){
+    	List<Integer> transformed = func.apply(toTransform);
+    	transformed.forEach(System.out::println);
+    	
     }
 
    public void worstFitDecreasing(PriorityQueue<Disk> pq, List<Integer> data){
